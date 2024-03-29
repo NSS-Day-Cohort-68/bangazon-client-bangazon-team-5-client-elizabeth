@@ -1,6 +1,5 @@
-export function CategoryCard({ Category, width="is-one-quarter" }) {
+export function CategoryCard({ Category}) {
     return (
-      <div className={`column ${width}`}>
         <div className="card">
           <header className="card-header">
             <p className="card-header-title">
@@ -8,7 +7,6 @@ export function CategoryCard({ Category, width="is-one-quarter" }) {
             </p>
           </header>
         </div>
-      </div>
     )
   }
   
