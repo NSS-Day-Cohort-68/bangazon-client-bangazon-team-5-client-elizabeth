@@ -7,7 +7,6 @@ export default function AddPaymentModal({ showModal, setShowModal, addNewPayment
   const merchantNameInput = useRef()
   const acctNumInput = useRef()
   const expirationDateInput = useRef()
-  const profile = useAppContext()
   const today = new Date()
 
   return (
@@ -27,7 +26,7 @@ export default function AddPaymentModal({ showModal, setShowModal, addNewPayment
         />
         <Input 
           id="expiration"
-          type="text"
+          type="date"
           label="Expiration Date"
           refEl={expirationDateInput}
         />
@@ -38,7 +37,6 @@ export default function AddPaymentModal({ showModal, setShowModal, addNewPayment
           onClick={() => addNewPayment({
             account_number: acctNumInput.current.value,
             merchant_name: merchantNameInput.current.value,
-            customer_id: profile.id,
             expiration_date: expirationDateInput.current.value,
             create_date: `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`
           })}
