@@ -3,13 +3,15 @@ import Filter from '../../components/filter'
 import Layout from '../../components/layout'
 import Navbar from '../../components/navbar'
 import { ProductCard } from '../../components/product/card'
-import { getProducts } from '../../data/products'
+import { getCategories, getProducts } from '../../data/products'
+import { CategoryCard } from '../../components/categories/card'
 
 export default function Products() {
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [loadingMessage, setLoadingMessage] = useState("Loading products...")
   const [locations, setLocations] = useState([])
+  const [categories, setCategories] = useState([])
 
   useEffect(() => {
     getProducts().then(data => {
@@ -31,6 +33,14 @@ export default function Products() {
     })
   }, [])
 
+  useEffect(() => {
+    getCategories().then(data => {
+      if (data) {
+        setCategories(data)
+      }
+    }) 
+  }, [])
+
   const searchProducts = (event) => {
     getProducts(event).then(productsData => {
       if (productsData) {
@@ -44,7 +54,13 @@ export default function Products() {
   return (
     <>
       <Filter productCount={products.length} onSearch={searchProducts} locations={locations} />
-
+      <div className="columns is-multiline">
+        {categories.map(c => (
+          <div key={c.id}>
+            <CategoryCard Category={c.name}/>
+          </div>
+        ))}
+      </div>
       <div className="columns is-multiline">
         {products.map(product => (
           <ProductCard product={product} key={product.id} />
