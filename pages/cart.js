@@ -17,14 +17,15 @@ export default function Cart() {
   const router = useRouter()
   const { profile } = useAppContext()
 
-  const refresh = () => {
-    getCart().then((cartData) => {
+  const refresh = async () => {
+    try {
+      const cartData = await getCart()
       if (cartData) {
         setCart(cartData)
-      } else {
-        setCart({})
       }
-    })
+    } catch (err) {
+      setCart({})
+    }
   }
 
   useEffect(() => {
