@@ -71,7 +71,7 @@ export default function Products() {
   if (filtered == false) {
     return (
       <>
-        <Filter productCount={products.length} onSearch={searchProducts}  locations={locations} />
+        <Filter productCount={products.length} onSearch={searchProducts}  locations={locations} setFiltered={setFiltered} />
         <div >
           {categories.map(c => 
           (
@@ -97,7 +97,7 @@ export default function Products() {
   if (filtered == true) {
     return (
       <>
-        <Filter productCount={products.length} onSearch={searchProducts} locations={locations} />
+        <Filter productCount={products.length} onSearch={searchProducts} locations={locations} setFiltered={setFiltered} />
         <div >
           <CategoryCard Category={"Products Matching Filter"} />
         </div>
