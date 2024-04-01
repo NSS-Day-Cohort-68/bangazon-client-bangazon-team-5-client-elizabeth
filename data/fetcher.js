@@ -20,9 +20,7 @@ const catchError = (err) => {
     window.location.href = "/login"
   }
   if (err.message === "404") {
-    console.log(
-      "404. There is no object at the requested endpoint matching the provided query"
-    )
+    throw Error(err.message)
   }
 }
 
