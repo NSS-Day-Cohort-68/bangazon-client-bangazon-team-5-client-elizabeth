@@ -3,13 +3,16 @@ import Filter from '../../components/filter'
 import Layout from '../../components/layout'
 import Navbar from '../../components/navbar'
 import { ProductCard } from '../../components/product/card'
-import { getProducts } from '../../data/products'
+import { getCategories, getProducts } from '../../data/products'
+import { CategoryCard } from '../../components/categories/card'
 
 export default function Products() {
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [loadingMessage, setLoadingMessage] = useState("Loading products...")
   const [locations, setLocations] = useState([])
+  const [categories, setCategories] = useState([])
+  const [filtered, setFiltered] = useState(false)
 
   useEffect(() => {
     getProducts().then(data => {
@@ -31,27 +34,83 @@ export default function Products() {
     })
   }, [])
 
+  useEffect(() => {
+    getCategories().then(data => {
+      if (data) {
+        setCategories(data)
+      }
+    }) 
+  }, [])
+
+  const getFirstFive = (c) => {
+    let array = []
+    let reverseProducts = products.toReversed()
+    for (const p of reverseProducts) {
+      if (array.length < 5) {
+        if (p.category_id === c.id) {
+          array.push(p)
+        }    
+      }
+    }
+    return array
+  } 
+
   const searchProducts = (event) => {
     getProducts(event).then(productsData => {
       if (productsData) {
         setProducts(productsData)
       }
     })
+    setFiltered(true)
   }
 
   if (isLoading) return <p>{loadingMessage}</p>
 
-  return (
-    <>
-      <Filter productCount={products.length} onSearch={searchProducts} locations={locations} />
 
-      <div className="columns is-multiline">
-        {products.map(product => (
-          <ProductCard product={product} key={product.id} />
-        ))}
-      </div>
-    </>
-  )
+
+  if (filtered == false) {
+    return (
+      <>
+        <Filter productCount={products.length} onSearch={searchProducts}  locations={locations} />
+        <div >
+          {categories.map(c => 
+          (
+            <div key={c.name}>
+              <div key={c.id}>
+                <CategoryCard Category={c.name}/>
+              </div>
+              <div className="columns is-multiline">
+              {  getFirstFive(c).map(product => (
+                  <ProductCard product={product} key={product.id} />
+                ))
+              }
+              </div>
+              <div>
+              </div>
+            </div>    
+          ))}
+        </div>
+      </>
+    )
+  }
+
+  if (filtered == true) {
+    return (
+      <>
+        <Filter productCount={products.length} onSearch={searchProducts} locations={locations} />
+        <div >
+          <CategoryCard Category={"Products Matching Filter"} />
+        </div>
+        <div className="columns is-multiline">
+          {products.map(product => (
+            <ProductCard product={product} key={product.id} />
+          ))}
+        </div>
+      </>
+    )
+  }
+    
+
 }
 
 Products.getLayout = function getLayout(page) {
