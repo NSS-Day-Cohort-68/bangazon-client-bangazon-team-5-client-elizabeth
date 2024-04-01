@@ -8,6 +8,7 @@ import CompleteFormModal from '../components/order/form-modal'
 import { completeCurrentOrder, getCart } from '../data/orders'
 import { getPaymentTypes } from '../data/payment-types'
 import { removeProductFromOrder } from '../data/products'
+import { deleteOrder } from '../data/orders'
 
 export default function Cart() {
   const [cart, setCart] = useState({})
@@ -40,6 +41,10 @@ export default function Cart() {
     removeProductFromOrder(productId).then(refresh)
   }
 
+  const deleteCurrentOrder = () => {
+    deleteOrder().then(refresh)
+  }
+
   return (
     <>
       <CompleteFormModal
@@ -52,7 +57,7 @@ export default function Cart() {
         <CartDetail cart={cart} removeProduct={removeProduct} />
         <>
           <a className="card-footer-item" onClick={() => setShowCompleteForm(true)}>Complete Order</a>
-          <a className="card-footer-item">Delete Order</a>
+          <a className="card-footer-item" onClick={() => deleteCurrentOrder()}>Delete Order</a>
         </>
       </CardLayout>
     </>
