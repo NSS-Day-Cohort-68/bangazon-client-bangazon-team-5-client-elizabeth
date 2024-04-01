@@ -12,6 +12,7 @@ export default function Products() {
   const [loadingMessage, setLoadingMessage] = useState("Loading products...")
   const [locations, setLocations] = useState([])
   const [categories, setCategories] = useState([])
+  const [filtered, setFiltered] = useState(False)
 
   useEffect(() => {
     getProducts().then(data => {
@@ -41,33 +42,57 @@ export default function Products() {
     }) 
   }, [])
 
+  const getFirstFive = (c) => {
+    let array = []
+    for (const p of products) {
+      if (array.length < 5) {
+        if (p.category_id === c.id) {
+          array.push(p)
+        }    
+      }
+    }
+    return array
+  } 
+
   const searchProducts = (event) => {
     getProducts(event).then(productsData => {
       if (productsData) {
         setProducts(productsData)
       }
     })
+    setFiltered(True)
   }
 
   if (isLoading) return <p>{loadingMessage}</p>
 
-  return (
-    <>
-      <Filter productCount={products.length} onSearch={searchProducts} locations={locations} />
-      <div className="columns is-multiline">
-        {categories.map(c => (
-          <div key={c.id}>
-            <CategoryCard Category={c.name}/>
-          </div>
-        ))}
-      </div>
-      <div className="columns is-multiline">
-        {products.map(product => (
-          <ProductCard product={product} key={product.id} />
-        ))}
-      </div>
-    </>
-  )
+
+
+  if (filtered = False) {
+    return (
+      <>
+        <Filter productCount={products.length} onSearch={searchProducts}  locations={locations} />
+        <div >
+          {categories.map(c => 
+          (
+            <div key={c.name}>
+              <div key={c.id}>
+                <CategoryCard Category={c.name}/>
+              </div>
+              <div className="columns is-multiline">
+              {  getFirstFive(c).map(product => (
+                  <ProductCard product={product} key={product.id} />
+                ))
+              }
+              </div>
+              <div>
+              </div>
+            </div>    
+          ))}
+        </div>
+      </>
+    )
+  }
+
 }
 
 Products.getLayout = function getLayout(page) {
