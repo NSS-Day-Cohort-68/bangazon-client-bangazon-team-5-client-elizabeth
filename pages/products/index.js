@@ -12,7 +12,7 @@ export default function Products() {
   const [loadingMessage, setLoadingMessage] = useState("Loading products...")
   const [locations, setLocations] = useState([])
   const [categories, setCategories] = useState([])
-  const [filtered, setFiltered] = useState(False)
+  const [filtered, setFiltered] = useState(false)
 
   useEffect(() => {
     getProducts().then(data => {
@@ -44,7 +44,8 @@ export default function Products() {
 
   const getFirstFive = (c) => {
     let array = []
-    for (const p of products) {
+    let reverseProducts = products.toReversed()
+    for (const p of reverseProducts) {
       if (array.length < 5) {
         if (p.category_id === c.id) {
           array.push(p)
@@ -60,14 +61,14 @@ export default function Products() {
         setProducts(productsData)
       }
     })
-    setFiltered(True)
+    setFiltered(true)
   }
 
   if (isLoading) return <p>{loadingMessage}</p>
 
 
 
-  if (filtered = False) {
+  if (filtered == false) {
     return (
       <>
         <Filter productCount={products.length} onSearch={searchProducts}  locations={locations} />
@@ -92,6 +93,23 @@ export default function Products() {
       </>
     )
   }
+
+  if (filtered == true) {
+    return (
+      <>
+        <Filter productCount={products.length} onSearch={searchProducts} locations={locations} />
+        <div >
+          <CategoryCard Category={"Products Matching Filter"} />
+        </div>
+        <div className="columns is-multiline">
+          {products.map(product => (
+            <ProductCard product={product} key={product.id} />
+          ))}
+        </div>
+      </>
+    )
+  }
+    
 
 }
 
