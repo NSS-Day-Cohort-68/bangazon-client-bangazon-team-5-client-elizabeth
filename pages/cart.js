@@ -18,7 +18,7 @@ export default function Cart() {
 
   const refresh = () => {
     getCart().then(cartData => {
-      if (cartData) {
+      if (cartData || cartData == {}) {
         setCart(cartData)
       }
     })
@@ -38,11 +38,11 @@ export default function Cart() {
   }
 
   const removeProduct = (productId) => {
-    removeProductFromOrder(productId).then(refresh)
+    removeProductFromOrder(productId).then(refresh())
   }
 
   const deleteCurrentOrder = () => {
-    deleteOrder().then(refresh)
+    deleteOrder().then(refresh())
   }
 
   return (
