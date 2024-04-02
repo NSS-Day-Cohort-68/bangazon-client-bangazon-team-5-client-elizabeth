@@ -72,7 +72,7 @@ export default function Cart() {
           >
             Complete Order
           </a>
-          <a className="card-footer-item">Delete Order</a>
+          <a className="card-footer-item" onClick={() => deleteCurrentOrder()}>Delete Order</a>
         </>
       </CardLayout>
     </>
