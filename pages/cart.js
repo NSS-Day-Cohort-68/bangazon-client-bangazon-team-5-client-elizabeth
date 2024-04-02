@@ -9,6 +9,7 @@ import { completeCurrentOrder, getCart } from "../data/orders"
 import { getPaymentTypes } from "../data/payment-types"
 import { removeProductFromOrder } from "../data/products"
 import { useAppContext } from "../context/state"
+import { deleteOrder } from '../data/orders'
 
 export default function Cart() {
   const [cart, setCart] = useState({})
@@ -47,7 +48,11 @@ export default function Cart() {
   }
 
   const removeProduct = (productId) => {
-    removeProductFromOrder(productId).then(refresh)
+    removeProductFromOrder(productId).then(refresh())
+  }
+
+  const deleteCurrentOrder = () => {
+    deleteOrder().then(refresh())
   }
 
   return (
@@ -67,7 +72,7 @@ export default function Cart() {
           >
             Complete Order
           </a>
-          <a className="card-footer-item">Delete Order</a>
+          <a className="card-footer-item" onClick={() => deleteCurrentOrder()}>Delete Order</a>
         </>
       </CardLayout>
     </>
