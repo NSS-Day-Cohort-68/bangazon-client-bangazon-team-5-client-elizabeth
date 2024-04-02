@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { getCategories } from '../data/products'
 import { Input, Select } from './form-elements'
 
-export default function Filter({ productCount, onSearch, locations, setFiltered }) {
+export default function Filter({ productCount, onSearch, locations, setFiltered, filtered }) {
   const refEls = {
     location: useRef(),
     category: useRef(),
@@ -30,7 +30,7 @@ export default function Filter({ productCount, onSearch, locations, setFiltered 
       }
     }
     onSearch('')
-    setFiltered(false)
+    setFiltered(!filtered)
   }
   const orderByOptions = [
     {
@@ -73,6 +73,7 @@ export default function Filter({ productCount, onSearch, locations, setFiltered 
       newQuery += buildQuery(refEl, refEls[refEl].current.value)
     }
     setQuery(newQuery)
+    setFiltered(!filtered)
   }
 
   return (
