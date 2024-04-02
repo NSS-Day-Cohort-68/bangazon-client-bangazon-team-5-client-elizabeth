@@ -24,6 +24,12 @@ export function AppWrapper({ children }) {
           }
         })
       }
+    } else {
+      if (!authRoutes.includes(router.pathname)) {
+        router.push("/login")
+      } else {
+        router.push(router.pathname)
+      }
     }
   }, [token, router.pathname])
 
