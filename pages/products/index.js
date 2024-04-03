@@ -61,7 +61,6 @@ export default function Products() {
         setProducts(productsData)
       }
     })
-    setFiltered(true)
   }
 
   if (isLoading) return <p>{loadingMessage}</p>

@@ -76,6 +76,15 @@ export default function Filter({ productCount, onSearch, locations, setFiltered,
     setFiltered(!filtered)
   }
 
+  const search = () => {
+    const newQuery = ""
+    for (let refEl in refEls) {
+      newQuery += buildQuery(refEl, refEls[refEl].current.value)
+    }
+    setQuery(newQuery)
+    setFiltered(true)
+  }
+
   return (
     <div className='level'>
       <div className="level-left">
@@ -90,14 +99,13 @@ export default function Filter({ productCount, onSearch, locations, setFiltered,
             id="name"
             refEl={refEls.name}
             addlClass="has-addons"
-            extra={
-              <p className="control">
-                <button className="button is-primary" onClick={filter}>
-                  Search
-                </button>
-              </p>
-            }
-          />
+          >
+            <p className="control">
+              <button className="button is-primary" onClick={search}>
+                Search
+              </button>
+            </p>
+          </Input>
         </div>
       </div>
       <div className="level-right">
