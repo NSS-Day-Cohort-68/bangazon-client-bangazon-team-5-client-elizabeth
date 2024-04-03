@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { useEffect, useState, useRef } from "react"
 import { useAppContext } from "../context/state"
 
@@ -7,10 +8,13 @@ export default function Navbar() {
   const hamburger = useRef()
   const navbar = useRef()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     if (token) {
       setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
     }
   }, [token])
 
@@ -60,8 +64,7 @@ export default function Navbar() {
             onClick={() => {
               localStorage.removeItem("token")
               setToken("")
-              setProfile({})
-              setIsLoggedIn(false)
+              router.push("/login")
             }}
           >
             Log out
