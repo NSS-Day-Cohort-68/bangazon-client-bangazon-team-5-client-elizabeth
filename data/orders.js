@@ -1,10 +1,21 @@
-import { fetchWithResponse, fetchWithoutResponse } from './fetcher'
+import { fetchWithResponse, fetchWithoutResponse } from "./fetcher"
 
 export function getCart() {
   return fetchWithResponse("cart", {
     headers: {
       Authorization: `Token ${localStorage.getItem("token")}`,
     },
+  })
+}
+
+export function addProductToCart(productId) {
+  return fetchWithoutResponse("/cart", {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ product_id: productId }),
   })
 }
 
@@ -29,9 +40,9 @@ export function completeCurrentOrder(orderId, paymentTypeId) {
 
 export function deleteOrder() {
   return fetchWithoutResponse(`profile/cart`, {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      Authorization: `Token ${localStorage.getItem('token')}`
-    }
+      Authorization: `Token ${localStorage.getItem("token")}`,
+    },
   })
 }
