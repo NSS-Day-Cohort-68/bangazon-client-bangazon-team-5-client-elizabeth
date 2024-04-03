@@ -76,11 +76,9 @@ export default function Filter({ productCount, onSearch, locations, setFiltered,
     setFiltered(!filtered)
   }
 
-  const search = () => {
+  const searchName = () => {
     const newQuery = ""
-    for (let refEl in refEls) {
-      newQuery += buildQuery(refEl, refEls[refEl].current.value)
-    }
+    newQuery += buildQuery(refEls.name, refEls.name.current.value)
     setQuery(newQuery)
     setFiltered(true)
   }
@@ -101,7 +99,7 @@ export default function Filter({ productCount, onSearch, locations, setFiltered,
             addlClass="has-addons"
           >
             <p className="control">
-              <button className="button is-primary" onClick={search}>
+              <button className="button is-primary" onClick={searchName}>
                 Search
               </button>
             </p>
