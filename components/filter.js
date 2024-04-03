@@ -103,6 +103,11 @@ export default function Filter({ productCount, onSearch, locations, setFiltered,
                 Search
               </button>
             </p>
+            <p className="control">
+                      <button className="button is-danger" onClick={clear}>
+                        Clear
+                      </button>
+                    </p>
           </Input>
         </div>
       </div>
