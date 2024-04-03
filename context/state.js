@@ -16,7 +16,7 @@ export function AppWrapper({ children }) {
   useEffect(() => {
     const authRoutes = ["/login", "/register"]
 
-    const fetchData = async () => {
+    const getAndSetProfile = async () => {
       const profileData = await getUserProfile()
       if (profileData) {
         setProfile(profileData)
@@ -26,7 +26,7 @@ export function AppWrapper({ children }) {
     if (token) {
       localStorage.setItem("token", token)
       if (!authRoutes.includes(router.pathname)) {
-        fetchData()
+        getAndSetProfile()
       }
     } else {
       setProfile({})
