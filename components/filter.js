@@ -30,7 +30,7 @@ export default function Filter({ productCount, onSearch, locations, setFiltered,
       }
     }
     onSearch('')
-    setFiltered(!filtered)
+    setFiltered(false)
   }
   const orderByOptions = [
     {
@@ -73,12 +73,12 @@ export default function Filter({ productCount, onSearch, locations, setFiltered,
       newQuery += buildQuery(refEl, refEls[refEl].current.value)
     }
     setQuery(newQuery)
-    setFiltered(!filtered)
+    setFiltered(true)
   }
 
   const searchName = () => {
     const newQuery = ""
-    newQuery += buildQuery(refEls.name, refEls.name.current.value)
+    newQuery += buildQuery("name", refEls.name.current.value)
     setQuery(newQuery)
     setFiltered(true)
   }
