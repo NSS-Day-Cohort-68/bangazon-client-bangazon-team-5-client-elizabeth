@@ -14,7 +14,7 @@ export default function CartDetail({ cart, removeProduct }) {
             <td>
               <span
                 className="icon is-clickable"
-                onClick={() => removeProduct(product.id)}
+                onClick={() => removeProduct(lineitem.product.id)}
               >
                 <i className="fas fa-trash"></i>
               </span>
