@@ -48,11 +48,11 @@ export default function Cart() {
   }
 
   const removeProduct = (productId) => {
-    removeProductFromOrder(productId).then(refresh())
+    removeProductFromOrder(productId).then(() => {refresh()})
   }
 
   const deleteCurrentOrder = () => {
-    deleteOrder().then(refresh())
+    deleteOrder().then(() => {refresh()})
   }
 
   return (
