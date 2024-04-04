@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { getCategories } from '../data/products'
 import { Input, Select } from './form-elements'
 
-export default function Filter({ productCount, onSearch, locations }) {
+export default function Filter({ productCount, onSearch, locations, setFiltered, filtered }) {
   const refEls = {
     location: useRef(),
     category: useRef(),
@@ -30,6 +30,7 @@ export default function Filter({ productCount, onSearch, locations }) {
       }
     }
     onSearch('')
+    setFiltered(false)
   }
   const orderByOptions = [
     {
@@ -72,6 +73,14 @@ export default function Filter({ productCount, onSearch, locations }) {
       newQuery += buildQuery(refEl, refEls[refEl].current.value)
     }
     setQuery(newQuery)
+    setFiltered(true)
+  }
+
+  const searchName = () => {
+    const newQuery = ""
+    newQuery += buildQuery("name", refEls.name.current.value)
+    setQuery(newQuery)
+    setFiltered(true)
   }
 
   return (
@@ -88,14 +97,18 @@ export default function Filter({ productCount, onSearch, locations }) {
             id="name"
             refEl={refEls.name}
             addlClass="has-addons"
-            extra={
-              <p className="control">
-                <button className="button is-primary" onClick={filter}>
-                  Search
-                </button>
-              </p>
-            }
-          />
+          >
+            <p className="control">
+              <button className="button is-primary" onClick={searchName}>
+                Search
+              </button>
+            </p>
+            <p className="control">
+                      <button className="button is-danger" onClick={clear}>
+                        Clear
+                      </button>
+                    </p>
+          </Input>
         </div>
       </div>
       <div className="level-right">
