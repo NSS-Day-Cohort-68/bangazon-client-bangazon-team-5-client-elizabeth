@@ -1,28 +1,48 @@
-import { fetchWithResponse } from './fetcher'
+import { fetchWithResponse, fetchWithoutResponse } from "./fetcher"
 
 export function getCart() {
-  return fetchWithResponse('cart', {
+  return fetchWithResponse("cart", {
     headers: {
-      Authorization: `Token ${localStorage.getItem('token')}`
-    }
+      Authorization: `Token ${localStorage.getItem("token")}`,
+    },
+  })
+}
+
+export function addProductToCart(productId) {
+  return fetchWithoutResponse("/cart", {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ product_id: productId }),
   })
 }
 
 export function getOrders() {
-  return fetchWithResponse('orders', {
+  return fetchWithResponse("orders", {
     headers: {
-      Authorization: `Token ${localStorage.getItem('token')}`
-    }
+      Authorization: `Token ${localStorage.getItem("token")}`,
+    },
   })
 }
 
 export function completeCurrentOrder(orderId, paymentTypeId) {
-  return fetchWithResponse(`orders/${orderId}/complete`, {
-    method: 'PUT',
+  return fetchWithResponse(`orders/${orderId}`, {
+    method: "PUT",
     headers: {
-      Authorization: `Token ${localStorage.getItem('token')}`,
-      'Content-Type': 'application/json'
+      Authorization: `Token ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({paymentTypeId})
+    body: JSON.stringify({ payment_type: paymentTypeId }),
+  })
+}
+
+export function deleteOrder() {
+  return fetchWithoutResponse(`profile/cart`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+    },
   })
 }

@@ -11,21 +11,27 @@ export function AppWrapper({ children }) {
 
   useEffect(() => {
     setToken(localStorage.getItem("token"))
-  }, [token])
+  }, [])
 
   useEffect(() => {
     const authRoutes = ["/login", "/register"]
+
+    const getAndSetProfile = async () => {
+      const profileData = await getUserProfile()
+      if (profileData) {
+        setProfile(profileData)
+      }
+    }
+
     if (token) {
       localStorage.setItem("token", token)
       if (!authRoutes.includes(router.pathname)) {
-        getUserProfile().then((profileData) => {
-          if (profileData) {
-            setProfile(profileData)
-          }
-        })
+        getAndSetProfile()
       }
+    } else {
+      setProfile({})
     }
-  }, [token])
+  }, [token, router.pathname])
 
   return (
     <AppContext.Provider value={{ profile, token, setToken, setProfile }}>
