@@ -1,10 +1,11 @@
-import { fetchWithResponse, fetchWithoutResponse } from "./fetcher"
+import { fetchWithResponse} from "./fetcher"
 
 
 export function getLikeByProductId(productId) {
-    return fetchWithResponse(`likes?${id}`, {
+    return fetchWithResponse(`products/${productId}/like`, {
       headers: {
         Authorization: `Token ${localStorage.getItem("token")}`,
       },
+      body: JSON.stringify(data)
     })
   }

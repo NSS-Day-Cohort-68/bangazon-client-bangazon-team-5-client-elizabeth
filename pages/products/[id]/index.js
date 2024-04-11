@@ -5,18 +5,19 @@ import Navbar from '../../../components/navbar'
 import { Detail } from '../../../components/product/detail'
 import { Ratings } from '../../../components/rating/detail'
 import { getProductById, likeProduct, unLikeProduct } from '../../../data/products'
+import { getLikeByProductId } from '../../../data/like'
 
 export default function ProductDetail() {
   const router = useRouter()
   const { id } = router.query
   const [product, setProduct] = useState({})
-  const [is_liked, setIs_liked] = useState(False)
-  const { profile } = useAppContext()
+  const [is_liked, setIs_liked] = useState(false)
+  
 
   useEffect(() => {
-    getIs_liked(id).then(data => {
-      if (data.liked == True){
-        setIs_liked(True)
+    getLikeByProductId(id).then(data => {
+      if (data.liked == true){
+        setIs_liked(true)
       }
 
     })
@@ -47,7 +48,7 @@ export default function ProductDetail() {
   return (
     <div className="columns is-centered">
       <div className="column">
-        <Detail product={product} like={like} unlike={unlike}/>
+        <Detail product={product} like={like} unlike={unlike} is_liked={is_liked}/>
         <Ratings
           refresh={refresh}
           number_purchased={product.number_sold}

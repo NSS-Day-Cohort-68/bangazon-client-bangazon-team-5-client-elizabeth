@@ -5,7 +5,7 @@ import Modal from "../modal"
 import { Input } from "../form-elements"
 import { addProductToCart } from "../../data/orders"
 
-export function Detail({ product, like, unlike }) {
+export function Detail({ product, like, unlike, is_liked }) {
   const router = useRouter()
   const usernameEl = useRef()
   const [showModal, setShowModal] = useState(false)
@@ -85,7 +85,7 @@ export function Detail({ product, like, unlike }) {
                 </button>
               </p>
               <p className="control">
-                {product.is_liked ? (
+                {is_liked == true ? (
                   <button
                     className="button is-link is-outlined"
                     onClick={unlike}
