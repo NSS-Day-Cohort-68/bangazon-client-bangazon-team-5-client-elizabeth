@@ -3,9 +3,9 @@ import { rateProduct } from '../../data/products'
 import { RatingsContainer } from './container'
 import { Header } from './header'
 
-export function Ratings({ average_rating, refresh, ratings = [], number_purchased, likes = [] }) {
+export function Ratings({ product, average_rating, refresh, ratings = [], number_purchased, likes = [] }) {
   const [productId, setProductId] = useState(0)
-  const saveRating = (newRating) => {
+  const saveRating = (productId, newRating) => {
     rateProduct(productId, newRating).then(refresh)
 
   }
@@ -24,7 +24,7 @@ export function Ratings({ average_rating, refresh, ratings = [], number_purchase
         numberPurchased={number_purchased}
         likesLength={likes.length}
       />
-      <RatingsContainer ratings={ratings} saveRating={saveRating} />
+      <RatingsContainer ratings={ratings} saveRating={saveRating} product={product}/>
     </div>
   )
 }
