@@ -10,6 +10,17 @@ export default function ProductDetail() {
   const router = useRouter()
   const { id } = router.query
   const [product, setProduct] = useState({})
+  const [is_liked, setIs_liked] = useState(False)
+  const { profile } = useAppContext()
+
+  useEffect(() => {
+    getIs_liked(id).then(data => {
+      if (data.liked == True){
+        setIs_liked(True)
+      }
+
+    })
+  },[id])
 
   const refresh = () => {
     getProductById(id).then(productData => {
