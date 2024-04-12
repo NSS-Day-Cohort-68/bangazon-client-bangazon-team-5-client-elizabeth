@@ -12,17 +12,19 @@ export default function ProductDetail() {
   const { id } = router.query
   const [product, setProduct] = useState({})
   const [is_liked, setIs_liked] = useState(false)
+  const [isProductLoaded, setIsProductLoaded] = useState(false)
   
   const refresh = () => {
     getProductById(id).then(productData => {
       if (productData) {
         setProduct(productData)
+        setIsProductLoaded(true)
       }
     })
   }
 
   useEffect(() => {
-    if (product) {
+    if (isProductLoaded) {
       getLikeByProductId(product.id)
         .then(data => {
           setIs_liked(data.liked)
@@ -31,14 +33,16 @@ export default function ProductDetail() {
           console.error('Error fetching like status:', error)
         })
     }
-  },[product])
+  },[isProductLoaded])
 
   const like = () => {
     likeProduct(id).then(refresh)
+    setIs_liked(true)
   }
 
   const unlike = () => {
     unLikeProduct(id).then(refresh)
+    setIs_liked(false)
   }
 
   useEffect(() => {
