@@ -13,16 +13,6 @@ export default function ProductDetail() {
   const [product, setProduct] = useState({})
   const [is_liked, setIs_liked] = useState(false)
   
-
-  useEffect(() => {
-    getLikeByProductId(id).then(data => {
-      if (data.liked == true){
-        setIs_liked(true)
-      }
-
-    })
-  },[id])
-
   const refresh = () => {
     getProductById(id).then(productData => {
       if (productData) {
@@ -30,6 +20,18 @@ export default function ProductDetail() {
       }
     })
   }
+
+  useEffect(() => {
+    if (product) {
+      getLikeByProductId(product.id)
+        .then(data => {
+          setIs_liked(data.liked)
+        })
+        .catch(error => {
+          console.error('Error fetching like status:', error)
+        })
+    }
+  },[product])
 
   const like = () => {
     likeProduct(id).then(refresh)

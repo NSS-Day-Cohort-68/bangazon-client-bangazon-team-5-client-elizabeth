@@ -6,6 +6,5 @@ export function getLikeByProductId(productId) {
       headers: {
         Authorization: `Token ${localStorage.getItem("token")}`,
       },
-      body: JSON.stringify(data)
     })
   }
