@@ -11,6 +11,8 @@ export default function RatingForm({ saveRating, product }) {
       score: outOf5,
       review: comment
     })
+    setComment("")
+    setRating(0)
   }
 
 

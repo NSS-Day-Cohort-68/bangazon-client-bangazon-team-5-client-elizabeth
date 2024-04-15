@@ -6,7 +6,7 @@ import { Header } from './header'
 export function Ratings({ product, average_rating, refresh, ratings = [], number_purchased, likes = [] }) {
   const [productId, setProductId] = useState(0)
   const saveRating = (productId, newRating) => {
-    rateProduct(productId, newRating).then(refresh)
+    rateProduct(productId, newRating).then(() => refresh())
 
   }
 
@@ -24,7 +24,7 @@ export function Ratings({ product, average_rating, refresh, ratings = [], number
         numberPurchased={number_purchased}
         likesLength={likes.length}
       />
-      <RatingsContainer ratings={ratings} saveRating={saveRating} product={product}/>
+      <RatingsContainer ratings={ratings} saveRating={saveRating} product={product} refresh={refresh}/>
     </div>
   )
 }
