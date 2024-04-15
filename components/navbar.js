@@ -130,6 +130,9 @@ export default function Navbar() {
           <Link href="/stores">
             <a className="navbar-item">Stores</a>
           </Link>
+          <Link href="/products/liked">
+            <a className="navbar-item">My Liked Products</a>
+          </Link>
         </div>
         <div className="navbar-end">
           {isLoggedIn ? getLoggedInButtons() : getLoggedOutButtons()}

@@ -8,3 +8,11 @@ export function getLikeByProductId(productId) {
       },
     })
   }
+
+export function getLikedProducts() {
+  return fetchWithResponse('products/liked', {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+    },
+  })
+} 
