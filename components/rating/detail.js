@@ -24,7 +24,7 @@ export function Ratings({ product, average_rating, refresh, ratings = [], number
         numberPurchased={number_purchased}
         likesLength={likes.length}
       />
-      <RatingsContainer ratings={ratings} saveRating={saveRating} product={product} refresh={refresh}/>
+      <RatingsContainer ratings={ratings} saveRating={saveRating} product={product}/>
     </div>
   )
 }
