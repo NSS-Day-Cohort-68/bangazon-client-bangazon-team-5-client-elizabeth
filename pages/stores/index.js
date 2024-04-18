@@ -5,6 +5,7 @@ import { StoreCard } from '../../components/store/card'
 import { getStores } from '../../data/stores'
 import { getProductByCustomerId, getProducts } from '../../data/products'
 import { ProductCard } from '../../components/product/card'
+import { IndexStoreCard } from '../../components/store/index-card'
 
 
 export default function Stores() {
@@ -18,6 +19,7 @@ export default function Stores() {
         for (let store of stores) {
           getProductByCustomerId(store.owner.id).then(data => {
             if (data.length != 0)
+            store.productcount = data.length
             activeStores.push(store)
           })
         }
@@ -42,7 +44,7 @@ export default function Stores() {
         stores.map(store => (
           <>
           <div className="columns is multi-line">
-            <StoreCard store={store} key={store.id} />
+            <IndexStoreCard store={store} key={store.id}/>
           </div>
           <div className="columns is multi-line">
           {products.filter((product) => (product.customer_id==store.owner.id)).slice(0,4).map((product) => (
