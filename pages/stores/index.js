@@ -41,11 +41,11 @@ export default function Stores() {
       {
         stores.map(store => (
           <>
-          <div>
+          <div className="columns is multi-line">
             <StoreCard store={store} key={store.id} />
           </div>
-          <div className="columns is-multiline">
-          {products.filter((product) => (product.customer_id==store.owner.id)).slice(0,5).map((product) => (
+          <div className="columns is multi-line">
+          {products.filter((product) => (product.customer_id==store.owner.id)).slice(0,4).map((product) => (
                   <ProductCard product={product} key={product.id} />
                 ))}
           </div>
