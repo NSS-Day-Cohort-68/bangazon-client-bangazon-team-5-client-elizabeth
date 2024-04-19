@@ -18,9 +18,10 @@ export default function Stores() {
       if (stores) {
         for (let store of stores) {
           getProductByCustomerId(store.owner.id).then(data => {
-            if (data.length != 0)
+            if (data.length != 0) {
             store.productcount = data.length
             activeStores.push(store)
+            }
           })
         }
         setStores(activeStores)
