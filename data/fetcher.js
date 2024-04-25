@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000"
+const API_URL = "https://goldfish-app-2wpc5.ondigitalocean.app"
 
 const checkError = (res) => {
   if (!res.ok) {
