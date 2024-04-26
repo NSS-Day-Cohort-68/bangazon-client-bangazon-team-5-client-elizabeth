@@ -1,16 +1,18 @@
 import { Rating } from 'react-simple-star-rating'
 import { useState } from 'react'
 
-export default function RatingForm({ saveRating }) {
+export default function RatingForm({ saveRating, product }) {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState("")
   
   const submitRating = () => {
     const outOf5 = rating/20
-    saveRating({
+    saveRating(product.id, {
       score: outOf5,
       review: comment
     })
+    setComment("")
+    setRating(0)
   }
 
 
@@ -19,7 +21,7 @@ export default function RatingForm({ saveRating }) {
     <div className="tile is-child ">
       <article className="media box">
         <figure className="media-left">
-          <Rating onClick={setRating} ratingValue={rating} />
+          <Rating onClick={setRating} ratingValue={rating} productId={product.id} />
         </figure>
         <div className="media-content">
           <div className="field">

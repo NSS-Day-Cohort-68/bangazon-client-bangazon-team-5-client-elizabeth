@@ -3,15 +3,36 @@ import Layout from '../../components/layout'
 import Navbar from '../../components/navbar'
 import { StoreCard } from '../../components/store/card'
 import { getStores } from '../../data/stores'
+import { getProductByCustomerId, getProducts } from '../../data/products'
+import { ProductCard } from '../../components/product/card'
+import { IndexStoreCard } from '../../components/store/index-card'
 
 
 export default function Stores() {
   const [stores, setStores] = useState([])
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
-    getStores().then(data => {
+    let activeStores = []
+    getStores().then(stores => {
+      if (stores) {
+        for (let store of stores) {
+          getProductByCustomerId(store.owner.id).then(data => {
+            if (data.length != 0) {
+            store.productcount = data.length
+            activeStores.push(store)
+            }
+          })
+        }
+        setStores(activeStores)
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    getProducts().then(data => {
       if (data) {
-        setStores(data)
+        setProducts(data)
       }
     })
   }, [])
@@ -19,10 +40,19 @@ export default function Stores() {
   return (
     <>
       <h1 className="title">Stores</h1>
-      <div className="columns is-multiline">
+      <div>
       {
         stores.map(store => (
-          <StoreCard store={store} key={store.id} />
+          <>
+          <div className="columns is multi-line">
+            <IndexStoreCard store={store} key={store.id}/>
+          </div>
+          <div className="columns is multi-line">
+          {products.filter((product) => (product.customer_id==store.owner.id)).slice(0,4).map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))}
+          </div>
+          </> 
         ))
       }
       </div>

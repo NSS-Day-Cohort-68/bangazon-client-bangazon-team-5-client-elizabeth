@@ -8,10 +8,10 @@ const checkError = (res) => {
 }
 
 const checkErrorJson = (res) => {
-  if (res.status !== 200) {
-    throw Error(res.status)
-  } else {
+  if (res.status == 200 || res.status == 201) {
     return res.json()
+  } else {
+    throw Error(res.status)
   }
 }
 
